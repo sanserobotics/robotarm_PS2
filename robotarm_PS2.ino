@@ -58,7 +58,7 @@ uint servo_base_arm_angle = servo_base_arm_angle_mid;
 uint servo_mid_arm_angle = servo_mid_arm_angle_45;
 uint servo_neck_angle = servo_neck_angle_mid;
 uint servo_gripper_angle = servo_gripper_angle_mid;
-uint servo_gripper = servo_gripper_max;
+uint servo_gripper = servo_gripper_mid;
 
 void setup(){
  
@@ -241,32 +241,33 @@ void loop() {
 
   // For base arm up and down rotation
   if(ps2x.Analog(PSS_LY) < 128) {
-    Serial.print("Base arm move upwards\n");
-    if(servo_base_arm_angle < servo_base_arm_angle_max)  {
-      servo2.write(++servo_base_arm_angle);
-      delay(5);
-    }
-  }
-  if(ps2x.Analog(PSS_LY) > 128) {
     Serial.print("Base arm move downwards\n");
     if(servo_base_arm_angle > servo_base_arm_angle_min)  {
       servo2.write(--servo_base_arm_angle);
       delay(5);
     }
   }
+  if(ps2x.Analog(PSS_LY) > 128) {
+    Serial.print("Base arm move upwards\n");
+    if(servo_base_arm_angle < servo_base_arm_angle_max)  {
+      servo2.write(++servo_base_arm_angle);
+      delay(5);
+    }
+  }
+
 
   // For mid arm up and down rotation
   if(ps2x.Analog(PSS_RY) > 128) {
-    Serial.print("Mid arm move upwards\n");
-    if(servo_mid_arm_angle < servo_mid_arm_angle_max)  {
-      servo3.write(++servo_mid_arm_angle);
+    Serial.print("Mid arm move downwards\n");
+    if(servo_mid_arm_angle > servo_mid_arm_angle_min)  {
+      servo3.write(--servo_mid_arm_angle);
       delay(5);
     }
   }
   if(ps2x.Analog(PSS_RY) < 128) {
-    Serial.print("Mid arm move downwards\n");
-    if(servo_mid_arm_angle > servo_mid_arm_angle_min)  {
-      servo3.write(--servo_mid_arm_angle);
+    Serial.print("Mid arm move upwards\n");
+    if(servo_mid_arm_angle < servo_mid_arm_angle_max)  {
+      servo3.write(++servo_mid_arm_angle);
       delay(5);
     }
   }
@@ -289,16 +290,16 @@ void loop() {
 
   // For gripper up and down rotation
   if(ps2x.Button(PSB_PAD_UP)) {
-    Serial.print("Gripper move upwards\n");
-    if(servo_gripper_angle < servo_gripper_angle_max)  {
-      servo5.write(++servo_gripper_angle);
+    Serial.print("Gripper move downwards\n");
+    if(servo_gripper_angle > servo_gripper_angle_min)  {
+      servo5.write(--servo_gripper_angle);
       delay(5);
     }
   }
   if(ps2x.Button(PSB_PAD_DOWN)) {
-    Serial.print("Gripper move downwards\n");
-    if(servo_gripper_angle > servo_gripper_angle_min)  {
-      servo5.write(--servo_gripper_angle);
+    Serial.print("Gripper move upwards\n");
+    if(servo_gripper_angle < servo_gripper_angle_max)  {
+      servo5.write(++servo_gripper_angle);
       delay(5);
     }
   }
@@ -309,7 +310,7 @@ void loop() {
     Serial.print("The angle of gripper is :");
     Serial.print(servo_gripper, DEC);
     Serial.print("/n");
-    if(servo_gripper < servo_gripper_max)  {
+    if(servo_gripper < servo_gripper_mid)  {
       servo6.write(++servo_gripper);
       delay(5);
     }
